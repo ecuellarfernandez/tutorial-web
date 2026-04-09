@@ -91,6 +91,40 @@
             box-shadow: 0px 0px 0px 0px #1a1a1a;
             transform: translate(4px, 4px);
         }
+        /* Form feedback animations */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes checkPop {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .feedback-slide-up {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        .feedback-check {
+            animation: checkPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+            opacity: 0;
+        }
+        .feedback-shimmer {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+        #form-success-panel { display: none; }
+        #form-success-panel.active { display: flex; }
+        #form-error-toast { transition: all 0.4s ease; }
+        #form-error-toast.visible { opacity: 1; transform: translateY(0); }
+        #form-submit.sending {
+            position: relative;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
@@ -299,7 +333,23 @@
 </div>
 </div>
 </div>
-<div class="lg:col-span-7">
+<div class="lg:col-span-7 relative">
+<!-- Success Panel (replaces form visually) -->
+<div id="form-success-panel" class="bg-primary-container border-4 border-primary p-8 md:p-12 neo-shadow flex-col items-center justify-center text-center min-h-[500px]">
+<div class="feedback-slide-up">
+<div class="feedback-check inline-flex items-center justify-center w-24 h-24 bg-primary text-on-primary border-4 border-primary mb-8">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1, 'wght' 700;">check_circle</span>
+</div>
+<h3 class="text-4xl md:text-5xl font-headline font-black uppercase tracking-tighter leading-tight mb-4">¡Registro Exitoso!</h3>
+<p class="text-xl font-medium mb-6 max-w-md mx-auto">Tu solicitud fue enviada correctamente. Nos pondremos en contacto contigo en menos de 24 horas.</p>
+<div class="inline-block bg-primary text-on-primary px-6 py-3 border-2 border-primary font-headline font-bold uppercase text-sm tracking-widest">
+<span class="material-symbols-outlined align-middle mr-2" style="font-size:18px;">mail</span>
+Revisa tu bandeja de entrada
+</div>
+<button id="form-reset-btn" class="block mx-auto mt-8 font-headline font-bold uppercase text-sm tracking-widest underline decoration-2 underline-offset-4 hover:text-secondary transition-colors cursor-pointer bg-transparent border-none">Enviar otro registro</button>
+</div>
+</div>
+<!-- The Form -->
 <form id="lead-form" class="bg-white border-2 border-primary p-8 md:p-12 neo-shadow">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
 <div class="flex flex-col gap-2">
@@ -327,13 +377,20 @@
 <label class="font-headline font-black uppercase text-xs tracking-widest" style="" for="input-message">Mensaje Opcional</label>
 <textarea id="input-message" class="border-0 border-b-4 border-primary focus:ring-0 focus:border-secondary bg-surface px-4 py-3 font-medium placeholder:text-primary/30 resize-none" placeholder="Cuéntanos más sobre tus expectativas..." rows="3"></textarea>
 </div>
-<div id="form-error" class="hidden mb-6 text-error font-medium p-4 border-2 border-error bg-error-container"></div>
-<div id="form-success" class="hidden mb-6 text-[#1a1a1a] font-medium p-4 border-2 border-[#1a1a1a] bg-[#ffcc00] font-headline">¡Gracias! Tu solicitud ha sido enviada exitosamente.</div>
 <button id="form-submit" class="w-full bg-primary text-on-primary text-xl font-headline font-black uppercase py-6 px-12 border-4 border-primary hover:bg-secondary hover:border-secondary transition-all active:translate-y-1 disabled:opacity-50" type="submit" style="">
-                                Enviar Solicitud de Registro
-                            </button>
+Enviar Solicitud de Registro
+</button>
 <p class="text-center mt-6 font-headline font-bold text-xs uppercase text-primary/40" style="">Nos pondremos en contacto en menos de 24 horas.</p>
 </form>
+<!-- Error Toast (below form) -->
+<div id="form-error-toast" class="mt-6 bg-error-container border-4 border-error p-6 neo-shadow-sm flex items-start gap-4 opacity-0 translate-y-4" style="display:none;">
+<span class="material-symbols-outlined text-error text-3xl flex-shrink-0" style="font-variation-settings: 'FILL' 1;">error</span>
+<div>
+<p class="font-headline font-black uppercase text-sm tracking-widest text-error mb-1">Error al enviar</p>
+<p id="form-error-msg" class="font-medium text-on-error-container"></p>
+</div>
+<button id="error-close-btn" class="ml-auto flex-shrink-0 bg-transparent border-none cursor-pointer"><span class="material-symbols-outlined text-error">close</span></button>
+</div>
 </div>
 </div>
 </div>
@@ -376,15 +433,34 @@
 
     const form = document.getElementById('lead-form');
     const btn = document.getElementById('form-submit');
-    const msgError = document.getElementById('form-error');
-    const msgSuccess = document.getElementById('form-success');
+    const successPanel = document.getElementById('form-success-panel');
+    const errorToast = document.getElementById('form-error-toast');
+    const errorMsg = document.getElementById('form-error-msg');
+    const errorCloseBtn = document.getElementById('error-close-btn');
+    const resetBtn = document.getElementById('form-reset-btn');
 
-    form.addEventListener('submit', async (e) => {
+    // Close error toast
+    errorCloseBtn.addEventListener('click', function() {
+      errorToast.classList.remove('visible');
+      setTimeout(function() { errorToast.style.display = 'none'; }, 400);
+    });
+
+    // Reset form from success panel
+    resetBtn.addEventListener('click', function() {
+      successPanel.classList.remove('active');
+      form.style.display = '';
+      form.reset();
+    });
+
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
       btn.disabled = true;
-      btn.innerText = 'Enviando...';
-      msgError.classList.add('hidden');
-      msgSuccess.classList.add('hidden');
+      btn.classList.add('sending');
+      btn.innerHTML = '<span class="feedback-shimmer" style="position:absolute;inset:0;"></span>Enviando...';
+
+      // Hide any previous error
+      errorToast.classList.remove('visible');
+      errorToast.style.display = 'none';
 
       const leadData = {
         full_name: document.getElementById('input-name').value,
@@ -402,15 +478,21 @@
         .insert([leadData]);
 
       btn.disabled = false;
-      btn.innerText = 'ENVIAR SOLICITUD DE REGISTRO';
+      btn.classList.remove('sending');
+      btn.innerHTML = 'Enviar Solicitud de Registro';
 
       if (error) {
         console.error(error);
-        msgError.innerText = 'Ocurrió un error: ' + error.message;
-        msgError.classList.remove('hidden');
+        errorMsg.textContent = error.message || 'Hubo un problema al procesar tu solicitud. Intenta de nuevo.';
+        errorToast.style.display = 'flex';
+        // Trigger reflow for animation
+        void errorToast.offsetWidth;
+        errorToast.classList.add('visible');
       } else {
-        msgSuccess.classList.remove('hidden');
-        form.reset();
+        // Hide form, show success panel
+        form.style.display = 'none';
+        successPanel.classList.add('active');
+        successPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     });
   })();
