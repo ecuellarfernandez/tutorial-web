@@ -369,48 +369,50 @@
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const supabaseUrl = 'https://kzqjxabpayfsgrcexvpg.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6cWp4YWJwYXlmc2dyY2V4dnBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2OTgxMjksImV4cCI6MjA5MTI3NDEyOX0.qsPnqN8lPc8L5_wzJVcrt3VPoiELjpVuN7eHG9KC30Q';
-  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  (function() {
+    const supabaseUrl = 'https://kzqjxabpayfsgrcexvpg.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6cWp4YWJwYXlmc2dyY2V4dnBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2OTgxMjksImV4cCI6MjA5MTI3NDEyOX0.qsPnqN8lPc8L5_wzJVcrt3VPoiELjpVuN7eHG9KC30Q';
+    const sb = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-  const form = document.getElementById('lead-form');
-  const btn = document.getElementById('form-submit');
-  const msgError = document.getElementById('form-error');
-  const msgSuccess = document.getElementById('form-success');
+    const form = document.getElementById('lead-form');
+    const btn = document.getElementById('form-submit');
+    const msgError = document.getElementById('form-error');
+    const msgSuccess = document.getElementById('form-success');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    btn.disabled = true;
-    btn.innerText = 'Enviando...';
-    msgError.classList.add('hidden');
-    msgSuccess.classList.add('hidden');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.innerText = 'Enviando...';
+      msgError.classList.add('hidden');
+      msgSuccess.classList.add('hidden');
 
-    const leadData = {
-      full_name: document.getElementById('input-name').value,
-      email: document.getElementById('input-email').value,
-      phone: document.getElementById('input-phone').value,
-      city: document.getElementById('input-city').value,
-      interest: document.getElementById('input-interest').value,
-      message: document.getElementById('input-message').value,
-      source: 'landing',
-      status: 'new'
-    };
+      const leadData = {
+        full_name: document.getElementById('input-name').value,
+        email: document.getElementById('input-email').value,
+        phone: document.getElementById('input-phone').value,
+        city: document.getElementById('input-city').value,
+        interest: document.getElementById('input-interest').value,
+        message: document.getElementById('input-message').value,
+        source: 'landing',
+        status: 'new'
+      };
 
-    const { error } = await supabase
-      .from('leads')
-      .insert([leadData]);
+      const { error } = await sb
+        .from('leads')
+        .insert([leadData]);
 
-    btn.disabled = false;
-    btn.innerText = 'ENVIAR SOLICITUD DE REGISTRO';
+      btn.disabled = false;
+      btn.innerText = 'ENVIAR SOLICITUD DE REGISTRO';
 
-    if (error) {
-      console.error(error);
-      msgError.innerText = 'Ocurrió un error: ' + error.message;
-      msgError.classList.remove('hidden');
-    } else {
-      msgSuccess.classList.remove('hidden');
-      form.reset();
-    }
-  });
+      if (error) {
+        console.error(error);
+        msgError.innerText = 'Ocurrió un error: ' + error.message;
+        msgError.classList.remove('hidden');
+      } else {
+        msgSuccess.classList.remove('hidden');
+        form.reset();
+      }
+    });
+  })();
 </script>
 </body></html>
