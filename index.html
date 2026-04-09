@@ -1,0 +1,416 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Crea tu primera landing con IA - Workshop</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#ffdad6",
+                        "surface-container": "#eee9e0",
+                        "surface-container-low": "#f2ede5",
+                        "surface-bright": "#faf7f2",
+                        "on-secondary-container": "#1a1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#1a1a1a",
+                        "outline-variant": "#d0cbc3",
+                        "on-tertiary-fixed-variant": "#1a1a1a",
+                        "background": "#f5f0e8",
+                        "tertiary": "#0055ff",
+                        "secondary-fixed-dim": "#ffb3ab",
+                        "on-primary": "#ffffff",
+                        "surface": "#f5f0e8",
+                        "surface-container-high": "#e8e3da",
+                        "primary-fixed": "#ffcc00",
+                        "surface-dim": "#d6d1c9",
+                        "secondary": "#e63b2e",
+                        "on-primary-fixed-variant": "#1a1a1a",
+                        "tertiary-fixed": "#d6e3ff",
+                        "on-secondary-fixed-variant": "#1a1a1a",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#1a1a1a",
+                        "on-background": "#1a1a1a",
+                        "inverse-primary": "#f5f0e8",
+                        "on-surface-variant": "#4a4a4a",
+                        "error": "#cc0000",
+                        "on-surface": "#1a1a1a",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#a8c6ff",
+                        "tertiary-container": "#d6e3ff",
+                        "secondary-container": "#ffdad6",
+                        "on-tertiary-container": "#1a1a1a",
+                        "primary": "#1a1a1a",
+                        "primary-container": "#ffcc00",
+                        "on-primary-container": "#1a1a1a",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#1a1a1a",
+                        "outline": "#1a1a1a",
+                        "primary-fixed-dim": "#e6b800",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e2ddd4",
+                        "on-secondary": "#1a1a1a",
+                        "inverse-surface": "#1a1a1a",
+                        "on-secondary-fixed": "#1a1a1a",
+                        "surface-variant": "#e8e3da",
+                        "inverse-on-surface": "#f5f0e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neo-shadow {
+            box-shadow: 6px 6px 0px 0px #1a1a1a;
+        }
+        .neo-shadow-sm {
+            box-shadow: 4px 4px 0px 0px #1a1a1a;
+        }
+        .neo-shadow-hover:hover {
+            box-shadow: 0px 0px 0px 0px #1a1a1a;
+            transform: translate(4px, 4px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 bg-[#f5f0e8] border-b-2 border-[#1a1a1a] w-full">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-black text-[#1a1a1a] tracking-tight font-headline uppercase" style="">CREA IA</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-['Space_Grotesk'] uppercase tracking-tighter text-[#1a1a1a] hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors px-2 py-1" href="#beneficios" style="">Beneficios</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-tighter text-[#1a1a1a] hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors px-2 py-1" href="#pasos" style="">Pasos</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-tighter text-[#1a1a1a] hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors px-2 py-1" href="#registro" style="">Registro</a>
+</nav>
+<a class="bg-primary text-on-primary font-headline font-bold uppercase py-2 px-6 border-2 border-primary hover:bg-primary-container hover:text-on-primary-container transition-all active:translate-y-0.5" href="#registro" style="">
+                Inscribirse
+            </a>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[870px] flex flex-col justify-center items-start px-6 pt-12 pb-24 max-w-7xl mx-auto border-x-2 border-primary border-opacity-10 overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+<div class="lg:col-span-8 z-10">
+<span class="inline-block bg-secondary text-on-tertiary px-3 py-1 font-headline font-bold uppercase tracking-widest text-sm mb-6 border-2 border-primary" style="">Workshop Intensivo</span>
+<h1 class="text-6xl md:text-8xl lg:text-9xl font-headline font-black leading-none tracking-tighter mb-8 uppercase" style="">
+                        Crea tu primera <span class="bg-primary-container px-4" style="">landing</span> con IA
+                    </h1>
+<p class="text-xl md:text-2xl max-w-2xl font-medium leading-relaxed mb-10 text-on-surface-variant" style="">
+                        Domina las herramientas de Inteligencia Artificial para diseñar, estructurar y lanzar sitios web profesionales en horas, no semanas. <span class="font-bold underline decoration-secondary" style="">Sin escribir una sola línea de código.</span>
+</p>
+<div class="flex flex-col sm:flex-row gap-6">
+<a class="bg-primary-container text-on-primary-container text-xl font-headline font-black uppercase py-6 px-12 border-4 border-primary neo-shadow hover:translate-x-1 hover:translate-y-1 transition-all" href="#registro" style="">
+                            Registrarme Ahora
+                        </a>
+<div class="flex items-center gap-4 py-4 sm:px-6">
+<span class="material-symbols-outlined text-4xl" data-icon="play_circle" style="">play_circle</span>
+<span class="font-headline font-bold uppercase text-sm leading-tight" style=""><br></span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 relative">
+<div class="aspect-square bg-primary-container border-4 border-primary neo-shadow relative overflow-hidden">
+<img alt="IA Concept" class="w-full h-full object-cover mix-blend-multiply grayscale hover:grayscale-0 transition-all duration-500" data-alt="abstract geometric forms in 3D with high contrast lighting and sharp shadows in a minimalist architectural space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfv0tAzozPWAky9t3VsDfxYZpohtPL4wQcbAsajhF53Nu2cf52m48ZuWIFX7hGlkW3YeU0elJo6kiv9Rj_t1HA5BNCqOBWuxEPRgXA2ZW1wsV4hw76HmjeZWVz1E_KAsc1gNLsdIXAytu1azhclEE8nJabnm3Q9EXQvuGT-DVkszjqcrqHEOWIWZCVxgQnYc_42uagxgBaSl6yDRbihIqe3Y68RLMuIKEJ4U-_azmHrL_RJ7wP_pX-5akeqbXKu3I9za4lqAx26qCt" style="">
+</div>
+<div class="absolute -bottom-8 -left-8 bg-secondary text-on-tertiary p-6 border-4 border-primary neo-shadow max-w-[200px]">
+<p class="font-headline font-black text-4xl leading-none" style="">100%</p>
+<p class="font-headline font-bold uppercase text-xs mt-2 leading-tight" style="">Práctico y orientado a resultados</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Benefits Section (Bento Grid) -->
+<section class="py-24 px-6 border-y-2 border-primary" id="beneficios">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div>
+<h2 class="text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none" style="">Beneficios</h2>
+<p class="mt-4 text-xl font-medium max-w-xl" style="">Acelera tu carrera creativa con el poder de la IA generativa aplicada al diseño web.</p>
+</div>
+<div class="text-right">
+<span class="font-headline font-black text-8xl opacity-10 leading-none" style="">01</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Benefit Card 1 -->
+<div class="bg-surface-container border-2 border-primary p-8 flex flex-col justify-between group hover:bg-white transition-colors">
+<div>
+<span class="material-symbols-outlined text-5xl mb-6 block text-secondary" data-icon="bolt" style="">bolt</span>
+<h3 class="text-3xl font-headline font-black uppercase mb-4 leading-tight" style="">Velocidad Extrema</h3>
+<p class="text-on-surface-variant font-medium leading-relaxed" style="">
+                                Reduce el tiempo de desarrollo de semanas a horas. Aprende a iterar conceptos visuales y estructuras de contenido instantáneamente.
+                            </p>
+</div>
+<div class="mt-8 border-t-2 border-primary pt-4 font-headline font-bold text-xs uppercase tracking-widest text-primary opacity-40 group-hover:opacity-100 transition-opacity" style="">
+                            Efficiency First
+                        </div>
+</div>
+<!-- Benefit Card 2 -->
+<div class="bg-primary-container border-2 border-primary p-8 flex flex-col justify-between neo-shadow group">
+<div>
+<span class="material-symbols-outlined text-5xl mb-6 block" data-icon="code_off" style="">code_off</span>
+<h3 class="text-3xl font-headline font-black uppercase mb-4 leading-tight" style="">Cero Código</h3>
+<p class="text-on-primary-container font-medium leading-relaxed" style="">
+                                Enfócate en la estrategia y la creatividad. Te enseñamos a conectar herramientas que hacen el trabajo técnico por ti.
+                            </p>
+</div>
+<div class="mt-8 border-t-2 border-primary pt-4 font-headline font-bold text-xs uppercase tracking-widest text-on-primary-container opacity-40 group-hover:opacity-100 transition-opacity" style="">
+                            No-Code Mastery
+                        </div>
+</div>
+<!-- Benefit Card 3 -->
+<div class="bg-surface-container border-2 border-primary p-8 flex flex-col justify-between group hover:bg-white transition-colors">
+<div>
+<span class="material-symbols-outlined text-5xl mb-6 block text-tertiary" data-icon="verified" style="">verified</span>
+<h3 class="text-3xl font-headline font-black uppercase mb-4 leading-tight" style="">Resultados Pro</h3>
+<p class="text-on-surface-variant font-medium leading-relaxed" style="">
+                                No solo hagas una página, haz una gran página. Resultados que compiten con agencias digitales de alto nivel.
+                            </p>
+</div>
+<div class="mt-8 border-t-2 border-primary pt-4 font-headline font-bold text-xs uppercase tracking-widest text-primary opacity-40 group-hover:opacity-100 transition-opacity" style="">
+                            Top Tier Quality
+                        </div>
+</div>
+</div>
+</div>
+</section>
+<!-- How it Works Section -->
+<section class="py-24 px-6 bg-[#1a1a1a] text-white overflow-hidden" id="pasos">
+<div class="max-w-7xl mx-auto">
+<div class="mb-20 text-center md:text-left">
+<h2 class="text-5xl md:text-8xl font-headline font-black uppercase tracking-tighter leading-none mb-4" style="">El Proceso</h2>
+<p class="text-xl text-zinc-400 font-medium max-w-2xl" style="">Tres etapas definidas para llevar tu idea de cero a producción real.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-1px bg-zinc-800">
+<!-- Step 1 -->
+<div class="p-12 bg-[#1a1a1a] border-2 border-zinc-800 relative group overflow-hidden">
+<div class="absolute -right-4 -top-8 text-[12rem] font-headline font-black text-white/5 leading-none pointer-events-none group-hover:text-primary-container/10 transition-colors" style="">A</div>
+<span class="text-primary-container font-headline font-black text-2xl mb-8 block" style="">01</span>
+<h3 class="text-4xl font-headline font-black uppercase mb-6 leading-tight" style="">Aprende</h3>
+<p class="text-zinc-400 text-lg leading-relaxed mb-8" style="">
+                            Entiende el ecosistema de IA: desde GPT-4 para estructura hasta Midjourney para assets visuales de alta fidelidad.
+                        </p>
+<ul class="space-y-3 font-headline font-bold text-sm uppercase tracking-tight">
+<li class="flex items-center gap-2" style=""><span class="w-1.5 h-1.5 bg-primary-container"></span> Prompt Engineering</li>
+<li class="flex items-center gap-2" style=""><span class="w-1.5 h-1.5 bg-primary-container"></span> Copywriting con IA</li>
+</ul>
+</div>
+<!-- Step 2 -->
+<div class="p-12 bg-[#1a1a1a] border-2 border-zinc-800 relative group overflow-hidden">
+<div class="absolute -right-4 -top-8 text-[12rem] font-headline font-black text-white/5 leading-none pointer-events-none group-hover:text-secondary/10 transition-colors" style="">C</div>
+<span class="text-secondary font-headline font-black text-2xl mb-8 block" style="">02</span>
+<h3 class="text-4xl font-headline font-black uppercase mb-6 leading-tight" style="">Crea</h3>
+<p class="text-zinc-400 text-lg leading-relaxed mb-8" style="">
+                            Ensambla tu landing usando constructores modernos. Aplica principios de diseño suizo y jerarquía visual profesional.
+                        </p>
+<ul class="space-y-3 font-headline font-bold text-sm uppercase tracking-tight">
+<li class="flex items-center gap-2" style=""><span class="w-1.5 h-1.5 bg-secondary"></span> Wireframing Visual</li>
+<li class="flex items-center gap-2" style=""><span class="w-1.5 h-1.5 bg-secondary"></span> Diseño de UI</li>
+</ul>
+</div>
+<!-- Step 3 -->
+<div class="p-12 bg-[#1a1a1a] border-2 border-zinc-800 relative group overflow-hidden">
+<div class="absolute -right-4 -top-8 text-[12rem] font-headline font-black text-white/5 leading-none pointer-events-none group-hover:text-tertiary/10 transition-colors" style="">L</div>
+<span class="text-tertiary font-headline font-black text-2xl mb-8 block" style="">03</span>
+<h3 class="text-4xl font-headline font-black uppercase mb-6 leading-tight" style="">Lanza</h3>
+<p class="text-zinc-400 text-lg leading-relaxed mb-8" style="">
+                            Publica tu sitio web. Configura dominios, SEO básico y analíticas para empezar a recibir visitantes hoy mismo.
+                        </p>
+<ul class="space-y-3 font-headline font-bold text-sm uppercase tracking-tight">
+<li class="flex items-center gap-2" style=""><span class="w-1.5 h-1.5 bg-tertiary"></span> Hosting &amp; Dominios</li>
+<li class="flex items-center gap-2" style=""><span class="w-1.5 h-1.5 bg-tertiary"></span> SEO Optimization</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust / Testimonial Section -->
+<section class="py-24 px-6 border-b-2 border-primary">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-center">
+<div class="md:w-1/3">
+<div class="bg-primary p-1 border-4 border-primary neo-shadow">
+<img alt="Instructor" class="w-full h-auto grayscale filter brightness-90 contrast-125" data-alt="portrait of a creative professional in a high contrast black and white style with sharp shadows and minimalist clothing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbdle5UcWHraPsG2_q5cUjTLs2bU1S1FzZjYrNbCteBjSWpQzQSwZ0x36uJyb-WzFuJxfpLkpmbZgHR38jILHJHWFKEm9Xl1UjEhra_l3nH7TEM4gGWaxNnO4ZzlRMEY4yomKWHpKqe1c794jeVSjvqetVY_LFuy5KFsn9kULwzl_8UkIH51o8Mvf-mOGkWp4G5DSyk8OcV8v3X02OeWZfl0RbGcDLEGy_Y6nTj9OfdLFa4i9kom3xjwYMLdg9SbY_UpTQR7d8KlcN" style="">
+</div>
+</div>
+<div class="md:w-2/3">
+<span class="material-symbols-outlined text-6xl text-secondary mb-8" data-icon="format_quote" style="">format_quote</span>
+<blockquote class="text-3xl md:text-5xl font-headline font-black uppercase tracking-tighter leading-tight mb-8" style="">
+                        "La IA no va a reemplazar a los diseñadores, pero los diseñadores que usan IA van a reemplazar a los que no la usan. Este workshop es el punto de partida."
+                    </blockquote>
+<div class="flex items-center gap-4">
+<div class="w-12 h-0.5 bg-primary"></div>
+<div>
+<p class="font-headline font-black uppercase text-xl" style="">Su Nombre</p>
+<p class="font-headline font-bold uppercase text-xs text-on-surface-variant tracking-widest" style="">Director Creativo &amp; Expert in No-Code</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Registration Form Section -->
+<section class="py-24 px-6 bg-surface-container-low" id="registro">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+<div class="lg:col-span-5">
+<h2 class="text-6xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none mb-8" style="">Inscripción</h2>
+<p class="text-xl font-medium mb-12 text-on-surface-variant" style="">
+                            Reserva tu cupo para la próxima cohorte. Los grupos son limitados a 15 personas para asegurar atención personalizada.
+                        </p>
+<div class="space-y-8">
+<div class="flex gap-6 items-start">
+<div class="bg-primary text-white p-3 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="calendar_today" style="">calendar_today</span>
+</div>
+<div>
+<p class="font-headline font-black uppercase text-sm" style="">Fecha del evento</p>
+<p class="text-xl font-bold" style="">20 de Abril, 2026</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<div class="bg-primary text-white p-3 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="schedule" style="">schedule</span>
+</div>
+<div>
+<p class="font-headline font-black uppercase text-sm" style="">Horario Intensivo</p>
+<p class="text-xl font-bold" style="">09:00 - 18:00 (GMT-5)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7">
+<form id="lead-form" class="bg-white border-2 border-primary p-8 md:p-12 neo-shadow">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+<div class="flex flex-col gap-2">
+<label class="font-headline font-black uppercase text-xs tracking-widest" style="" for="input-name">Nombre Completo</label>
+<input id="input-name" required class="border-0 border-b-4 border-primary focus:ring-0 focus:border-secondary bg-surface px-4 py-3 font-medium placeholder:text-primary/30" placeholder="Ej. Juan Pérez" type="text">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-headline font-black uppercase text-xs tracking-widest" style="" for="input-email">Email Corporativo</label>
+<input id="input-email" required class="border-0 border-b-4 border-primary focus:ring-0 focus:border-secondary bg-surface px-4 py-3 font-medium placeholder:text-primary/30" placeholder="nombre@empresa.com" type="email">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-headline font-black uppercase text-xs tracking-widest" style="" for="input-phone">WhatsApp / Teléfono</label>
+<input id="input-phone" class="border-0 border-b-4 border-primary focus:ring-0 focus:border-secondary bg-surface px-4 py-3 font-medium placeholder:text-primary/30" placeholder="+57 300 000 0000" type="tel">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-headline font-black uppercase text-xs tracking-widest" style="" for="input-city">Ciudad</label>
+<input id="input-city" class="border-0 border-b-4 border-primary focus:ring-0 focus:border-secondary bg-surface px-4 py-3 font-medium placeholder:text-primary/30" placeholder="Bogotá, CO" type="text">
+</div>
+</div>
+<div class="flex flex-col gap-2 mb-8">
+<label class="font-headline font-black uppercase text-xs tracking-widest" style="" for="input-interest">Descripción del Proyecto</label>
+<input id="input-interest" class="border-0 border-b-4 border-primary focus:ring-0 focus:border-secondary bg-surface px-4 py-3 font-medium placeholder:text-primary/30" placeholder="¿Qué quieres construir en el workshop?" type="text">
+</div>
+<div class="flex flex-col gap-2 mb-10">
+<label class="font-headline font-black uppercase text-xs tracking-widest" style="" for="input-message">Mensaje Opcional</label>
+<textarea id="input-message" class="border-0 border-b-4 border-primary focus:ring-0 focus:border-secondary bg-surface px-4 py-3 font-medium placeholder:text-primary/30 resize-none" placeholder="Cuéntanos más sobre tus expectativas..." rows="3"></textarea>
+</div>
+<div id="form-error" class="hidden mb-6 text-error font-medium p-4 border-2 border-error bg-error-container"></div>
+<div id="form-success" class="hidden mb-6 text-[#1a1a1a] font-medium p-4 border-2 border-[#1a1a1a] bg-[#ffcc00] font-headline">¡Gracias! Tu solicitud ha sido enviada exitosamente.</div>
+<button id="form-submit" class="w-full bg-primary text-on-primary text-xl font-headline font-black uppercase py-6 px-12 border-4 border-primary hover:bg-secondary hover:border-secondary transition-all active:translate-y-1 disabled:opacity-50" type="submit" style="">
+                                Enviar Solicitud de Registro
+                            </button>
+<p class="text-center mt-6 font-headline font-bold text-xs uppercase text-primary/40" style="">Nos pondremos en contacto en menos de 24 horas.</p>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="bg-primary text-on-primary py-24 px-6 text-center border-t-2 border-white/10">
+<div class="max-w-4xl mx-auto">
+<h2 class="text-5xl md:text-8xl font-headline font-black uppercase tracking-tighter leading-tight mb-12" style="">
+                    El futuro del diseño no espera. <span class="text-primary-container italic underline" style="">¿Y tú?</span>
+</h2>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="bg-primary-container text-on-primary-container text-xl font-headline font-black uppercase py-6 px-12 border-2 border-primary-container hover:bg-white hover:text-primary hover:border-white transition-all" href="#registro" style="">
+                        Empezar ahora
+                    </a>
+<a class="inline-flex items-center gap-4 text-xl font-headline font-black uppercase py-6 px-12 border-2 border-white hover:bg-white hover:text-primary transition-all" href="#" style="">
+                        Consultar Programa
+                    </a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-[#1a1a1a] text-[#f5f0e8] py-12 px-6 flex flex-col md:flex-row justify-between items-center gap-6 border-t-2 border-[#f5f0e8]">
+<div class="text-lg font-bold text-[#ffcc00] font-headline uppercase tracking-tighter" style="">CREA IA</div>
+<div class="font-['Inter'] text-sm opacity-70 text-center md:text-left" style="">
+            © 2024 Crea tu primera landing con IA. Bauhaus Neo-Brutalist Edition.
+        </div>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-sm text-[#f5f0e8]/70 hover:text-[#ffcc00] underline" href="#" style="">Privacidad</a>
+<a class="font-['Inter'] text-sm text-[#f5f0e8]/70 hover:text-[#ffcc00] underline" href="#" style="">Términos</a>
+<a class="font-['Inter'] text-sm text-[#f5f0e8]/70 hover:text-[#ffcc00] underline" href="#" style="">Soporte</a>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const supabaseUrl = 'https://kzqjxabpayfsgrcexvpg.supabase.co';
+  const supabaseKey = 'sb_publishable_NfVfPK5jWNsDqFuK9GF3ew_ulszaWek';
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+  const form = document.getElementById('lead-form');
+  const btn = document.getElementById('form-submit');
+  const msgError = document.getElementById('form-error');
+  const msgSuccess = document.getElementById('form-success');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.innerText = 'Enviando...';
+    msgError.classList.add('hidden');
+    msgSuccess.classList.add('hidden');
+
+    const leadData = {
+      full_name: document.getElementById('input-name').value,
+      email: document.getElementById('input-email').value,
+      phone: document.getElementById('input-phone').value,
+      city: document.getElementById('input-city').value,
+      interest: document.getElementById('input-interest').value,
+      message: document.getElementById('input-message').value,
+      source: 'landing',
+      status: 'new'
+    };
+
+    const { error } = await supabase
+      .from('leads')
+      .insert([leadData]);
+
+    btn.disabled = false;
+    btn.innerText = 'ENVIAR SOLICITUD DE REGISTRO';
+
+    if (error) {
+      console.error(error);
+      msgError.innerText = 'Ocurrió un error: ' + error.message;
+      msgError.classList.remove('hidden');
+    } else {
+      msgSuccess.classList.remove('hidden');
+      form.reset();
+    }
+  });
+</script>
+</body></html>
